@@ -25,3 +25,9 @@ jobs:
           java-version: '17'
       #- run: java HelloWorldApp.java
 
+      - name: Build with maven
+        run: mvn clean install
+
+      - name: Build the tests
+        run: mvn tests
+
