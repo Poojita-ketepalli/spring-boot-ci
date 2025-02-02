@@ -38,7 +38,7 @@ jobs:
       #- run: java HelloWorldApp.java
 
       - name: Build with maven
-        run: mvn clean install
+        run: mvn clean install -X
 
       - name: Upload Test Reports (on failure)
         if: failure()
