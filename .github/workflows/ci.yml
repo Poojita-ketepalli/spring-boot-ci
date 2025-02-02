@@ -19,7 +19,7 @@ jobs:
 
       # Set up JDK
       - name: Set up JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           java-version: '17'  # Make sure this matches the version you're using locally
 
@@ -50,7 +50,12 @@ jobs:
         with:
           name: spring-boot-artifact
           path: target/*.jar  # Change to *.war if you're building a WAR file
-
+      - name: Upload Surefire Test Reports
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: surefire-reports
+          path: target/surefire-reports/
     # Deploy (optional step for deploy)
     # - name: Deploy to Server
     #   run: deploy-command-here
