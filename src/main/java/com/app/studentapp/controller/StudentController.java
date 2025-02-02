@@ -3,6 +3,8 @@ package com.app.studentapp.controller;
 import com.app.studentapp.bean.Student;
 import com.app.studentapp.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,9 +28,14 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student addStudent(@RequestBody Student student) {
-        return studentService.addStudent(student);
+    public ResponseEntity<Student> addStudent(@RequestBody Student student) {
+        // Add student to the service
+        Student addedStudent = studentService.addStudent(student);
+
+        // Return a ResponseEntity with the added student and a CREATED status
+        return new ResponseEntity<>(addedStudent, HttpStatus.CREATED);
     }
+
 
     @PutMapping("/{id}")
     public Student updateStudent(@PathVariable Long id, @RequestBody Student student) {
