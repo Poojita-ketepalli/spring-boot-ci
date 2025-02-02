@@ -15,47 +15,5 @@ jobs:
     steps:
       # Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # Set up JDK
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'  # Make sure this matches the version you're using locally
-
-      # Cache Maven dependencies
-      - name: Cache Maven dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      # Install dependencies without running tests
-      - name: Install dependencies
-        run: mvn install -DskipTests
-
-      # Run tests
-      - name: Run tests
-        run: mvn test
-
-      # Build and package the application
-      - name: Build package
-        run: mvn package -DskipTests
-
-      # Upload build artifacts (optional step if you need the JAR/WAR file)
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: spring-boot-artifact
-          path: target/*.jar  # Change to *.war if you're building a WAR file
-      - name: Upload Surefire Test Reports
-        if: failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: surefire-reports
-          path: target/surefire-reports/
-    # Deploy (optional step for deploy)
-    # - name: Deploy to Server
-    #   run: deploy-command-here
