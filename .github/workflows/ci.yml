@@ -7,6 +7,8 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+
 
 jobs:
   build:
@@ -51,3 +53,9 @@ jobs:
       - name: Build the tests
         run: mvn test
 
+  on-workflow-dispatch:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Manually triggering the workflow"
+        run: echo "Running on workflow dispatch"
